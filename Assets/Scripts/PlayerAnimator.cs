@@ -17,8 +17,8 @@ public class PlayerAnimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float speedPercent = navMeshAgent.velocity.magnitude / navMeshAgent.speed;
-        animator.SetFloat("speedPercent", speedPercent, .1f, Time.deltaTime);
+        float speed = navMeshAgent.velocity.magnitude / navMeshAgent.speed;
+        animator.SetFloat("speed", speed, .1f, Time.deltaTime);
         
     }
 }

@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Camera.main.transform.position = transform.position + cameraOffset;
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
             {
