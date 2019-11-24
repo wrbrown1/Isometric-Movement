@@ -18,19 +18,9 @@ public class PlayerAnimator : MonoBehaviour
 
     void Update()
     {
-        AnimateMovement();
+        //AnimateMovement();
         CheckIfMoving();
-        //AttackWhenNotMoving();
     }
-
-    //private void AttackWhenNotMoving()
-    //{
-    //    if (Input.GetMouseButtonDown(1) && !moving)
-    //    {
-    //        animator.SetTrigger("attack");
-    //        print("Attack");
-    //    }
-    //}
 
     private void AnimateMovement()
     {
