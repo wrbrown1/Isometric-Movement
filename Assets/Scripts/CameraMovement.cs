@@ -39,7 +39,7 @@ public class CameraMovement : MonoBehaviour
             Focus(target);
         }
     }
-
+    //change more changes
     private void MoveNormally()
     {
         Vector3 desiredPosition = target.position + cameraPosition;
@@ -61,10 +61,6 @@ public class CameraMovement : MonoBehaviour
         }
         else
         {
-            //float rotationSpeed = cameraRotationSpeed * Time.deltaTime;
-            //Vector3 newDirection = Vector3.RotateTowards(transform.forward, startingRotation.eulerAngles, rotationSpeed, 0f);
-            //transform.rotation = Quaternion.LookRotation(newDirection);
-            //print("here");
             focusing = false;
         }
     }
