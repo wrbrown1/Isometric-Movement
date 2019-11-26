@@ -110,4 +110,16 @@ public class CameraMovement : MonoBehaviour
         newDirection = Vector3.Lerp(targetDirection, newDirection, rotationSmoothSpeed);
         transform.rotation = Quaternion.LookRotation(newDirection);
     }
+
+    private void AdjustFOV()
+    {
+        if (Camera.main.fieldOfView < 70 && player.speed > 0f)
+        {
+            Camera.main.fieldOfView += 0.5f;
+        }
+        if (Camera.main.fieldOfView > 60 && player.speed == 0f)
+        {
+            Camera.main.fieldOfView -= 0.5f;
+        }
+    }
 }

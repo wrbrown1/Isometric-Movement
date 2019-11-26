@@ -99,12 +99,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void Focus(Interactable newFocus)
     {
-        focus = newFocus;
-        TrackTarget(newFocus);
+        if(newFocus != focus)
+        {
+            if(focus != null)
+            {
+                focus.OnDeFocused();
+            }
+            focus = newFocus;
+            TrackTarget(newFocus);
+        }
+        newFocus.OnFocused(transform);
     }
 
     private void StopFocusing()
     {
+        if(focus != null)
+        {
+            focus.OnDeFocused();
+        }
         focus = null;
         StopTrackingTarget();
     }
