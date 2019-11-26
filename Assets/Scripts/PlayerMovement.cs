@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public Interactable focus;
     bool tracking = false;
     bool inCombat = false;
-    float speed;
+    public float speed;
     Interactable interactable;
     NavMeshAgent agent;
     Animator animator;
