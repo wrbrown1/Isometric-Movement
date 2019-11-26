@@ -6,16 +6,16 @@ using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    NavMeshAgent agent;
-    [SerializeField] Vector3 cameraOffset = new Vector3(0f, 7f, 7f);
-    Animator animator;
-    float speed;
+    public Vector3 cameraOffset;
     public LayerMask movementMask;
     public Interactable focus;
-    Transform target;
     bool tracking = false;
     bool inCombat = false;
+    float speed;
     Interactable interactable;
+    NavMeshAgent agent;
+    Animator animator;
+    Transform target;
 
 
     void Start()
@@ -109,19 +109,6 @@ public class PlayerMovement : MonoBehaviour
         StopTrackingTarget();
     }
 
-    //private void Attack()
-    //{
-    //    if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
-    //    {
-    //        transform.rotation = Quaternion.LookRotation(hit.point);
-    //        Stop();
-    //        canMove = false;
-    //        canAttack = false;
-    //        animator.SetTrigger("attack");
-    //        Invoke("AllowToMove", .7f);
-    //    }
-    //}
-
     public void TrackTarget(Interactable interactable)
     {
         tracking = true;
@@ -138,9 +125,9 @@ public class PlayerMovement : MonoBehaviour
         agent.updateRotation = true;
     }
 
-    public Interactable GetInteractable()
+    public Interactable GetFocus()
     {
-        return interactable;
+        return focus;
     }
 
 }

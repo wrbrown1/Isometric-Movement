@@ -5,49 +5,88 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public Vector3 cameraOffset;
-    public float smoothSpeed;
-    [SerializeField] Transform target;
+    public Vector3 combatCameraOffset;
+    public Transform focusCameraPosition;
+    public Transform defaultCameraPosition;
+    public Transform target;
     public PlayerMovement player;
     public Interactable interactable;
-    bool inCombat = false;
+    public float smoothSpeed;
+    public float rotationSmoothSpeed;
+    public float cameraRotationSpeed = .5f;
+    public float cameraApproachSpeed = 3f;
+    bool focusing = false;
+    Quaternion startingRotation;
+    Vector3 cameraPosition;
+
+    private void Start()
+    {
+        startingRotation = transform.rotation;
+        cameraPosition = transform.TransformPoint(cameraOffset);
+    }
 
     private void Update()
     {
-        interactable = player.GetInteractable();
-        if (inCombat)
-        {
-            CheckForCombatInitiation(interactable);
-        }
+        interactable = player.GetFocus();
     }
 
     void LateUpdate()
     {
-        if (!inCombat)
+        CheckIfFocusing(interactable);
+        if (!focusing)
         {
-            Vector3 desiredPosition = target.position + cameraOffset;
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-            transform.position = smoothedPosition;
+            MoveNormally();
+            Focus(target);
         }
     }
 
-    private void CheckForCombatInitiation(Interactable interactable)
+    private void MoveNormally()
+    {
+        Vector3 desiredPosition = target.position + cameraPosition;
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        transform.position = smoothedPosition;
+        
+    }
+
+    private void CheckIfFocusing(Interactable interactable)
     {
         if (interactable != null)
         {
             float distanceBetween = Vector3.Distance(player.transform.position, interactable.transform.position);
             if (distanceBetween <= interactable.radius + 2f)
             {
-                inCombat = true;
-                EngageCombat();
-                //Camera.main.transform.LookAt(target);
-                print("there");
+                focusing = true;
+                Focus(interactable.transform);
             }
+        }
+        else
+        {
+            //float rotationSpeed = cameraRotationSpeed * Time.deltaTime;
+            //Vector3 newDirection = Vector3.RotateTowards(transform.forward, startingRotation.eulerAngles, rotationSpeed, 0f);
+            //transform.rotation = Quaternion.LookRotation(newDirection);
+            //print("here");
+            focusing = false;
         }
     }
 
-    private void EngageCombat()
+    private void Focus(Transform focus)
     {
-        float step = 1f * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+        Approach();
+        RotateTowards(focus);
+    }
+
+    private void Approach()
+    {
+        float step = cameraApproachSpeed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, focusCameraPosition.position, step);
+    }
+
+    private void RotateTowards(Transform focus)
+    {
+        float rotationSpeed = cameraRotationSpeed * Time.deltaTime;
+        Vector3 targetDirection = (focus.position - transform.position).normalized;
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, rotationSpeed, 0f);
+        newDirection = Vector3.Lerp(targetDirection, newDirection, rotationSmoothSpeed);
+        transform.rotation = Quaternion.LookRotation(newDirection);
     }
 }
