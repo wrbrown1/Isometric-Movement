@@ -10,6 +10,7 @@ public class Interactable : MonoBehaviour
     bool isFocus = false;
     bool interacted = false;
     public Transform player;
+    public Transform interactableTransform;
 
     public virtual void Interact()
     {
@@ -45,6 +46,10 @@ public class Interactable : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        if(interactableTransform == null)
+        {
+            interactableTransform = transform;
+        }
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, radius);
     }
