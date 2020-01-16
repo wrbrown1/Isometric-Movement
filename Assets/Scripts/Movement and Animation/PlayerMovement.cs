@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
     public Vector3 cameraOffset;
     public LayerMask movementMask;
     public Interactable focus;
+    public GameObject inventoryUI;
+    public bool canMove = true;
     bool tracking = false;
     bool inCombat = false;
     public float speed;
@@ -26,10 +26,23 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        CheckIfManagingInventory();
         GetSpeed();
         HandleMovement();
         AnimateMovement();
         CheckIfEngagingTarget();
+    }
+
+    private void CheckIfManagingInventory()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            canMove = false;
+        }
+        else
+        {
+            canMove = true;
+        }
     }
 
     private void CheckIfEngagingTarget()
@@ -74,12 +87,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveToClick()
     {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 100, movementMask))
+        if (canMove)
         {
-            agent.destination = hit.point;
-            StopTrackingTarget();
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, 100, movementMask))
+            {
+                agent.destination = hit.point;
+                StopTrackingTarget();
+            }
         }
     }
 
@@ -127,6 +143,10 @@ public class PlayerMovement : MonoBehaviour
         target = interactable.transform;
         agent.stoppingDistance = interactable.radius;
         agent.updateRotation = false;
+        if(interactable.radius > Vector3.Distance(interactable.transform.position, agent.transform.position))
+        {
+            transform.position -= interactable.transform.position;
+        }
     }
 
     public void StopTrackingTarget()

@@ -14,7 +14,9 @@ public class ItemPickUp : Interactable
     private void PickUpItem()
     {
         print("picking up " + item.itemName);
-        Inventory.instance.AddItem(item);
-        Destroy(gameObject);
+        if (Inventory.instance.AddItem(item))
+        {
+            Destroy(gameObject);
+        }
     }
 }

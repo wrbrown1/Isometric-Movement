@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Helmet
   m_EditorClassIdentifier: 
   itemName: Helmet
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: a4c2919b43d25a0408102cfed94421eb, type: 3}

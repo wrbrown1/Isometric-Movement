@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
     public delegate void ItemChanged();
     public ItemChanged itemChanged;
+    public int inventorySize = 12;
 
     private void Awake()
     {
@@ -19,13 +20,19 @@ public class Inventory : MonoBehaviour
         instance = this;
     }
 
-    public void AddItem(Item item)
+    public bool AddItem(Item item)
     {
+        if(items.Count >= inventorySize)
+        {
+            print("Not enough space!");
+            return false;
+        }
         items.Add(item);
         if(itemChanged != null)
         {
             itemChanged.Invoke();
         }
+        return true;
     }
 
     public void RemoveItem(Item item)

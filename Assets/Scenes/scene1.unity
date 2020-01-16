@@ -659,7 +659,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376245626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.25, y: 0.64, z: 0.59}
+  m_LocalPosition: {x: 9.25, y: 0.64, z: 0.61}
   m_LocalScale: {x: 0.41537, y: 0.41537, z: 0.41537}
   m_Children: []
   m_Father: {fileID: 0}
@@ -800,7 +800,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 094a2470d655eb941a0bcac33ffd21a3,
         type: 3}
       propertyPath: m_Name
-      value: AllInOne
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: -6057140222963153312, guid: 094a2470d655eb941a0bcac33ffd21a3,
         type: 3}
@@ -1168,6 +1168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items: []
+  inventorySize: 12
 --- !u!4 &661534205
 Transform:
   m_ObjectHideFlags: 0
@@ -1671,6 +1672,7 @@ GameObject:
   - component: {fileID: 1134334939}
   - component: {fileID: 1134334938}
   - component: {fileID: 1134334937}
+  - component: {fileID: 1134334941}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1758,6 +1760,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1134334941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134334936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc4836098b95c948815c075374f4147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsParent: {fileID: 1846287278}
+  inventorySlots: []
+  inventoryUI: {fileID: 207894706}
 --- !u!1001 &1156974580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3138,6 +3155,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   focus: {fileID: 0}
+  inventoryUI: {fileID: 0}
+  canMove: 1
   speed: 0
 --- !u!195 &2036034979
 NavMeshAgent:
